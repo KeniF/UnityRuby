@@ -71,7 +71,7 @@ public class RubyController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Launch();
+            LaunchProjectile();
         }
 
         if (Input.GetKeyDown(KeyCode.X))
@@ -111,7 +111,7 @@ public class RubyController : MonoBehaviour
         currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
         UIHealthBar.instance.SetValue(currentHealth / (float)maxHealth);
         if (currentHealth <= 0) {
-            SceneManager.LoadScene("GameOverScene");
+            KillRuby();
         }
     }
 
@@ -121,7 +121,17 @@ public class RubyController : MonoBehaviour
         UICogsCount.instance.SetCogs(currentCogs);
     }
 
-    void Launch()
+    public void KillRuby() {
+        gameObject.SetActive(false);
+        SceneManager.LoadScene("GameOverScene");
+    }
+
+    public void PlaySound(AudioClip clip)
+    {
+        audioSource.PlayOneShot(clip);
+    }
+
+    void LaunchProjectile()
     {
         if (currentCogs > 0)
         {
@@ -136,8 +146,4 @@ public class RubyController : MonoBehaviour
         }
     }
 
-    public void PlaySound(AudioClip clip)
-    {
-        audioSource.PlayOneShot(clip);
-    }
 }
